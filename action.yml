@@ -81,7 +81,7 @@ runs:
 
     - run: git -C "${{ env.TMP_DSTDIR }}" add "${{ inputs.output-directory }}/."
       shell: bash
-    - run: git -C "${{ env.TMP_DSTDIR }}" commit -am "${{ inputs.target_filepath }}"
+    - run: git -C "${{ env.TMP_DSTDIR }}" commit -am "${{ inputs.target-filepath }}"
       shell: bash
     - run: git -C "${{ env.TMP_DSTDIR }}" push origin HEAD
       shell: bash
