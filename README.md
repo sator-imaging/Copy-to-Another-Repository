@@ -36,7 +36,7 @@ jobs:
           # optional parameters and default values
           commit-message-prefix: '[actions] '   # followed by source repository name
           output-directory: "${{ github.event.repository.name }}"   # copy file into sub directory
-          pr-branch-prefix: "${{ github.event.repository.name }}"   # branch name prefix followed by date and time
+          pr-branch-prefix: "actions/${{ github.event.repository.name }}"   # branch name prefix followed by date and time
           pr-title: "GitHub Actions: ${{ github.event.repository.name }}"
           pr-message: "${{ github.repositoryUrl }}\\n${{ github.workflow }}${{ github.action }}"
           git-name: "${{ github.actor }}"
