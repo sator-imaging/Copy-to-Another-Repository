@@ -28,19 +28,19 @@ jobs:
         with:
 
           # required parameters
-          target-filepath: 'README.md'     # file path to copy
-          output-branch: 'main or master'  # branch name to create pull request
+          target-filepath: 'README.md'      # file path to copy
+          output-branch: 'main or master'   # branch name to create pull request
           output-repo: 'Owner/AnotherRepository'
           git-token: ${{ secrets.TOKEN_TO_ACCESS_OUTPUT_REPO }}
           
           # optional parameters and default values
-          commit-message-prefix: '[actions]'
+          commit-message-prefix: '[actions] '   # followed by source repository name
           output-directory: "${{ github.event.repository.name }}"   # copy file into sub directory
           pr-branch-prefix: "${{ github.event.repository.name }}"   # branch name prefix followed by date and time
           pr-title: "GitHub Actions: ${{ github.event.repository.name }}"
-          pr-message: "${{ github.workflow }}"
+          pr-message: "${{ github.repositoryUrl }}\n${{ github.workflow }}${{ github.action }}"
           git-name: "${{ github.actor }}"
-          git-email: 'your-email-address@users.noreply.github.com'  # user icon is not displayed if not set
+          git-email: 'your-email-address@users.noreply.github.com'   # user icon is not displayed if not set
 ```
 
 
