@@ -70,7 +70,7 @@ runs:
   - run: ls .
     shell: bash
 
-  - run: git -C "${{ env.DSTDIR }}" checkout -b "${PR_BRANCH}"
+  - run: git -C "${{ env.TMP_DSTDIR }}" checkout -b "${{ env.PR_BRANCH }}"
     shell: bash
 
 
