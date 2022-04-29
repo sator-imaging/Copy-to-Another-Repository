@@ -1,5 +1,5 @@
-name: 'Deploy to Another Repository'
-description: 'Deploy and Create Pull Request'
+name: 'Copy to Another Repository'
+description: 'Copy selected file to another repository and create Pull Request (PR).'
 author: 'Sator Imaging'
 branding:
   icon: copy
@@ -9,17 +9,17 @@ branding:
 inputs:
   target-filepath:
     required: true
-    description: 'README.md'
+    description: 'README.md for example.'
   output-repo:
     required: true
     description: 'SatorImaging/OpenManual'
   output-branch:
     required: true
-    description: 'master'
-  output-directory:
-    default: "${{ github.event.repository.name }}"
+    description: 'Branch name on output repository to create pull request.'
   commit-message-prefix:
     default: '[actions] '
+  output-directory:
+    default: "${{ github.event.repository.name }}"
   pr-branch-prefix:
     default: "${{ github.event.repository.name }}"
   pr-title:
@@ -33,7 +33,7 @@ inputs:
     default: 'devnull@inter.net'
   git-token:
     required: true
-    description: 'Personal Access Token used for commit/create pr on Output Repository'
+    description: 'Personal Access Token used for commit/create PR on output repository.'
 
 
 runs:
@@ -76,7 +76,6 @@ runs:
     - run: git -C "${{ env.TMP_DSTDIR }}" checkout -b "${{ env.PR_BRANCH }}"
       shell: bash
 
-
     - run: mkdir "${{ env.TMP_DSTDIR }}/${{ inputs.output-directory }}"
       shell: bash
     - run: mv -f "${{ env.TMP_SRCDIR }}/${{ inputs.target-filepath }}" "${{ env.TMP_DSTDIR }}/${{ inputs.output-directory }}"
@@ -89,6 +88,6 @@ runs:
     - run: git -C "${{ env.TMP_DSTDIR }}" push origin HEAD
       shell: bash
 
-    # -H "Accept: application/vnd.github.v3+json"
+    # adding this will cause syntax error... -H "Accept: application/vnd.github.v3+json"
     - run: curl -X POST "https://${{ inputs.git-token }}@api.github.com/repos/${{ inputs.output-repo }}/pulls" -d "{ \"title\":\"${{ inputs.pr-title }}\", \"body\":\"${{ inputs.pr-message }}\", \"head\":\"${{ env.PR_BRANCH }}\", \"base\":\"${{ inputs.output-branch }}\" }"
       shell: bash
