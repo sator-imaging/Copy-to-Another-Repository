@@ -53,6 +53,9 @@ runs:
       repository: "${{ inputs.output-repo }}"
       path: "${{ env.TMP_DSTDIR }}"
 
+  - run: echo "PR_BRANCH=${{ inputs.pr-branch-prefix }}---$(date +'%Y-%m-%d--%H-%M-%S')" >> $GITHUB_ENV
+    shell: bash
+
   - run: git config --global user.name "${{ inputs.git-name }}"
     shell: bash
   - run: git config --global user.email "${{ inputs.git-email }}"
@@ -62,7 +65,7 @@ runs:
 
   - run: cd "${{ env.TMP_DSTDIR }}"
     shell: bash
-  - run: git checkout -b "${{ env.PR_BRANCH }}"
+  - run: git checkout -b "${PR_BRANCH}"
     shell: bash
   - run: echo "$PR_BRANCH"
     shell: bash
