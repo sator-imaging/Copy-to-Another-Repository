@@ -40,46 +40,46 @@ env:
 runs:
   using: 'composite'
   steps:
-    - run: echo "source/dest: ${TMP_SRCDIR}/${TMP_DSTDIR}"
-      shell: bash
+  - run: echo "source/dest: ${TMP_SRCDIR}/${TMP_DSTDIR}"
+    shell: bash
 
-    - uses: actions/checkout@v3
-      with:
-        persist-credentials: false
-        path: "${{ env.TMP_SRCDIR }}"
+  - uses: actions/checkout@v3
+    with:
+      persist-credentials: false
+      path: "${{ env.TMP_SRCDIR }}"
 
-    - uses: actions/checkout@v3
-      with:
-        persist-credentials: false
-        repository: "${{ inputs.output-repo }}"
-        path: "${{ env.TMP_DSTDIR }}"
+  - uses: actions/checkout@v3
+    with:
+      persist-credentials: false
+      repository: "${{ inputs.output-repo }}"
+      path: "${{ env.TMP_DSTDIR }}"
 
-    - run: echo "PR_BRANCH=${{ inputs.pr-branch-prefix }}---$(date +'%Y-%m-%d--%H-%M-%S')" >> $GITHUB_ENV
-      shell: bash
+  - run: echo "PR_BRANCH=${{ inputs.pr-branch-prefix }}---$(date +'%Y-%m-%d--%H-%M-%S')" >> $GITHUB_ENV
+    shell: bash
 
-    - run: git config --global user.name "${{ inputs.git-name }}"
-      shell: bash
-    - run: git config --global user.email "${{ inputs.git-email }}"
-      shell: bash
-    - run: git config --global url."https://${{ inputs.git-token }}@github.com/".insteadOf "https://github.com/"
-      shell: bash
+  - run: git config --global user.name "${{ inputs.git-name }}"
+    shell: bash
+  - run: git config --global user.email "${{ inputs.git-email }}"
+    shell: bash
+  - run: git config --global url."https://${{ inputs.git-token }}@github.com/".insteadOf "https://github.com/"
+    shell: bash
 
-    - run: cd "${TMP_DSTDIR}"
-      shell: bash
-    - run: git checkout -b "${PR_BRANCH}"
-      shell: bash
+  - run: cd "${TMP_DSTDIR}"
+    shell: bash
+  - run: git checkout -b "${PR_BRANCH}"
+    shell: bash
 
-    - run: mkdir "${{ inputs.output-directory }}"
-      shell: bash
-    - run: mv -f "../${TMP_SRCDIR}/${{ inputs.target-filepath }}" "${{ inputs.output-directory }}"
-      shell: bash
+  - run: mkdir "${{ inputs.output-directory }}"
+    shell: bash
+  - run: mv -f "../${TMP_SRCDIR}/${{ inputs.target-filepath }}" "${{ inputs.output-directory }}"
+    shell: bash
 
-    - run: git add "."
-      shell: bash
-    - run: git commit -am "${{ github.repository }} at `date`"
-      shell: bash
-    - run: git push origin HEAD
-      shell: bash
+  - run: git add "."
+    shell: bash
+  - run: git commit -am "${{ github.repository }} at `date`"
+    shell: bash
+  - run: git push origin HEAD
+    shell: bash
 
-    - run: curl -X POST -H 'Accept: application/vnd.github.v3+json' "https://${{ inputs.git-token }}@api.github.com/repos/${{ inputs.output-repo }}/pulls" -d "{ \"title\":\"${{ inputs.pr-title }}\", \"body\":\"${{ inputs.pr-message }}\", \"head\":\"${PR_BRANCH}\", \"base\":\"${{ inputs.output-branch }}\" }"
-      shell: bash
+  - run: curl -X POST -H 'Accept: application/vnd.github.v3+json' "https://${{ inputs.git-token }}@api.github.com/repos/${{ inputs.output-repo }}/pulls" -d "{ \"title\":\"${{ inputs.pr-title }}\", \"body\":\"${{ inputs.pr-message }}\", \"head\":\"${PR_BRANCH}\", \"base\":\"${{ inputs.output-branch }}\" }"
+    shell: bash
