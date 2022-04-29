@@ -51,7 +51,10 @@ runs:
       repository: "${{ inputs.output-repo }}"
       path: "${{ env.TMP_DSTDIR }}"
 
-  - run: git config --global user.name "${{ inputs.git-name }}"
+  - run: echo "PR_BRANCH=${{ inputs.pr-branch-prefix }}---$(date +'%Y-%m-%d--%H-%M-%S')" >> $GITHUB_ENV
+    shell: bash
+
+- run: git config --global user.name "${{ inputs.git-name }}"
     shell: bash
   - run: git config --global user.email "${{ inputs.git-email }}"
     shell: bash
@@ -60,7 +63,7 @@ runs:
 
   - run: cd "${TMP_DSTDIR}"
     shell: bash
-  - run: git checkout -b "${{ inputs.pr-branch-prefix }}---$(date +'%Y-%m-%d--%H-%M-%S')"  # branch name must be same with curl JSON.head.
+  - run: git checkout -b "${PR_BRANCH}"
     shell: bash
 
   - run: mkdir "${{ inputs.output-directory }}"
@@ -75,8 +78,5 @@ runs:
   - run: git push origin HEAD
     shell: bash
 
-  - run: curl -X POST \
-        -H 'Accept: application/vnd.github.v3+json' \
-        "https://${{ inputs.git-token }}@api.github.com/repos/${{ inputs.output-repo }}/pulls" \
-        -d "{ \"title\":\"${{ inputs.pr-title }}\", \"body\":\"${{ inputs.pr-message }}\", \"head\":\"${{ inputs.pr-branch-prefix }}---$(date +'%Y-%m-%d--%H-%M-%S')\", \"base\":\"${{ inputs.output-branch }}\" }"
+  - run: curl -X POST -H 'Accept: application/vnd.github.v3+json' https://${{ inputs.git-token }}@api.github.com/repos/${{ inputs.output-repo }}/pulls" -d "{ \"title\":\"${{ inputs.pr-title }}\", \"body\":\"${{ inputs.pr-message }}\", \"head\":\"${PR_BRANCH}\", \"base\":\"${{ inputs.output-branch }}\" }"
     shell: bash
