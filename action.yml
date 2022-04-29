@@ -18,19 +18,22 @@ inputs:
     description: 'master'
   output-directory:
     default: "${{ github.event.repository.name }}"
+  commit-message-prefix:
+    default: '[bot] '
   pr-branch-prefix:
     default: "${{ github.event.repository.name }}"
   pr-title:
     default: "GitHub Actions: ${{ github.workflow }}"
   pr-message:
-    default: " "
+    default: ''
   git-name:
     default: "${{ github.actor }}"
   git-email:
-    default: "devnull@inter.net"
+    description: 'Use your "@users.noreply.github.com" email address if you want your account icon shown in commit messages.'
+    default: 'devnull@inter.net'
   git-token:
     required: true
-    description: "Personal Access Token for Output Repository"
+    description: 'Personal Access Token used for commit/create pr on Output Repository'
 
 
 runs:
@@ -81,7 +84,7 @@ runs:
 
     - run: git -C "${{ env.TMP_DSTDIR }}" add "${{ inputs.output-directory }}/."
       shell: bash
-    - run: git -C "${{ env.TMP_DSTDIR }}" commit -am "${{ github.action }}"
+    - run: git -C "${{ env.TMP_DSTDIR }}" commit -am "${{ inputs.commit-message-prefix }}${{ github.action }}"
       shell: bash
     - run: git -C "${{ env.TMP_DSTDIR }}" push origin HEAD
       shell: bash
