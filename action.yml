@@ -54,6 +54,7 @@ runs:
 
   - name: Update Env
     run: echo "PR_BRANCH=${{ inputs.pr-branch-prefix }}---$(date +'%Y-%m-%d--%H-%M-%S')" >> $GITHUB_ENV
+      shell: bash
 
   - name: Commit & PR
     run: |
