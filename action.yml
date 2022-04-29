@@ -17,7 +17,7 @@ inputs:
     required: true
     description: 'Branch name on output repository to create pull request.'
   commit-message-prefix:
-    default: '[actions] '
+    default: '[actions]'
   output-directory:
     default: "${{ github.event.repository.name }}"
   pr-branch-prefix:
