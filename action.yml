@@ -23,9 +23,9 @@ inputs:
   pr-branch-prefix:
     default: "${{ github.event.repository.name }}"
   pr-title:
-    default: "GitHub Actions: ${{ github.workflow }}"
+    default: "GitHub Actions: ${{ github.event.repository.name }}"
   pr-message:
-    default: ''
+    default: "${{ github.workflow }}"
   git-name:
     default: "${{ github.actor }}"
   git-email:
