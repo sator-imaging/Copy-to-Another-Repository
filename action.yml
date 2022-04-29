@@ -36,56 +36,59 @@ inputs:
 runs:
   using: 'composite'
   steps:
-  - run: echo "PR_BRANCH=${{ inputs.pr-branch-prefix }}---$(date +'%Y-%m-%d--%H-%M-%S')" >> $GITHUB_ENV
-    shell: bash
-  - run: echo "TMP_SRCDIR=./source" >> $GITHUB_ENV
-    shell: bash
-  - run: echo "TMP_DSTDIR=./dest" >> $GITHUB_ENV
-    shell: bash
+    - run: echo "PR_BRANCH=${{ inputs.pr-branch-prefix }}---$(date +'%Y-%m-%d--%H-%M-%S')" >> $GITHUB_ENV
+      shell: bash
+    - run: echo "TMP_SRCDIR=./source" >> $GITHUB_ENV
+      shell: bash
+    - run: echo "TMP_DSTDIR=./dest" >> $GITHUB_ENV
+      shell: bash
 
-  - uses: actions/checkout@v3
-    with:
-      persist-credentials: false
-      path: "${{ env.TMP_SRCDIR }}"
+    - uses: actions/checkout@v3
+      with:
+        persist-credentials: false
+        path: "${{ env.TMP_SRCDIR }}"
 
-  - uses: actions/checkout@v3
-    with:
-      persist-credentials: false
-      path: "${{ env.TMP_DSTDIR }}"
-      repository: "${{ inputs.output-repo }}"
+    - uses: actions/checkout@v3
+      with:
+        persist-credentials: false
+        path: "${{ env.TMP_DSTDIR }}"
+        repository: "${{ inputs.output-repo }}"
 
-  - run: ls .
-    shell: bash
+    - run: ls .
+      shell: bash
 
-  - run: git config --global user.name "${{ inputs.git-name }}"
-    shell: bash
-  - run: git config --global user.email "${{ inputs.git-email }}"
-    shell: bash
-  - run: git config --global url."https://${{ inputs.git-token }}@github.com/".insteadOf "https://github.com/"
-    shell: bash
+    - run: git config --global user.name "${{ inputs.git-name }}"
+      shell: bash
+    - run: git config --global user.email "${{ inputs.git-email }}"
+      shell: bash
+    - run: git config --global url."https://${{ inputs.git-token }}@github.com/".insteadOf "https://github.com/"
+      shell: bash
 
-  - run: cd "${{ env.TMP_DSTDIR }}"
-    shell: bash
-    # we cannot change current directory
-  - run: ls .
-    shell: bash
+    - run: cd "${{ env.TMP_DSTDIR }}"
+      shell: bash
+      # we cannot change current directory
+    - run: ls .
+      shell: bash
 
-  - run: git -C "${{ env.TMP_DSTDIR }}" checkout -b "${{ env.PR_BRANCH }}"
-    shell: bash
+    - run: git -C "${{ env.TMP_DSTDIR }}" checkout -b "${{ env.PR_BRANCH }}"
+      shell: bash
 
 
-  - run: mkdir "${{ env.TMP_DSTDIR }}/${{ inputs.output-directory }}"
-    shell: bash
-  - run: mv -f "${{ env.TMP_SRCDIR }}/${{ inputs.target-filepath }}" "${{ env.TMP_DSTDIR }}/${{ inputs.output-directory }}"
-    shell: bash
+    - run: mkdir "${{ env.TMP_DSTDIR }}/${{ inputs.output-directory }}"
+      shell: bash
+    - run: mv -f "${{ env.TMP_SRCDIR }}/${{ inputs.target-filepath }}" "${{ env.TMP_DSTDIR }}/${{ inputs.output-directory }}"
+      shell: bash
 
-  - run: git -C "${{ env.TMP_DSTDIR }}" add "${{ inputs.output-directory }}/."
-    shell: bash
-  - run: git -C "${{ env.TMP_DSTDIR }}" commit -am "${{ inputs.target_filepath }}"
-    shell: bash
-  - run: git -C "${{ env.TMP_DSTDIR }}" push origin HEAD
-    shell: bash
+    - run: git -C "${{ env.TMP_DSTDIR }}" add "${{ inputs.output-directory }}/."
+      shell: bash
+    - run: git -C "${{ env.TMP_DSTDIR }}" commit -am "${{ inputs.target_filepath }}"
+      shell: bash
+    - run: git -C "${{ env.TMP_DSTDIR }}" push origin HEAD
+      shell: bash
 
-  - run curl -X POST -H 'Accept: application/vnd.github.v3+json' "https://${{ inputs.git-token }}@api.github.com/repos/${{ inputs.output-repo }}/pulls" -d "{ \"title\":\"${{ inputs.pr-title }}\", \"body\":\"${{ inputs.pr-message }}\", \"head\":\"${{ env.PR_BRANCH }}\", \"base\":\"${{ inputs.output-branch }}\" }"
-    shell: bash
-    
+    - run: curl -X POST \
+        -H 'Accept: application/vnd.github.v3+json' \
+        "https://${{ inputs.git-token }}@api.github.com/repos/${{ inputs.output-repo }}/pulls" \
+        -d "{ \"title\":\"${{ inputs.pr-title }}\", \"body\":\"${{ inputs.pr-message }}\", \"head\":\"${{ env.PR_BRANCH }}\", \"base\":\"${{ inputs.output-branch }}\" }"
+      shell: bash
+
