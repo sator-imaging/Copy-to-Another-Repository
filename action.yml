@@ -64,7 +64,7 @@ runs:
   - run: git config --global url."https://${{ inputs.git-token }}@github.com/".insteadOf "https://github.com/"
     shell: bash
 
-  - run: cd "${TMP_DSTDIR}"
+  - run: cd "${{ env.TMP_DSTDIR }}"
     shell: bash
   - run: ls .
     shell: bash
