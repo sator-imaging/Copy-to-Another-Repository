@@ -8,30 +8,28 @@ branding:
 
 inputs:
   target-filepath:
+    required: true
     description: 'README.md'
   output-repo:
+    required: true
     description: 'SatorImaging/OpenManual'
   output-branch:
+    required: true
     description: 'master'
   output-directory:
-    required: false
     default: "${{ github.event.repository.name }}"
   pr-branch-prefix:
-    required: false
     default: "${{ github.event.repository.name }}"
   pr-title:
-    required: false
     default: "GitHub Actions: ${{ github.workflow }}"
   pr-message:
-    required: false
     default: ""
   git-name:
-    required: false
     default: "${{ github.actor }}"
   git-email:
-    required: false
     default: "devnull@inter.net"
   git-token:
+    required: true
     default: ""
 
 
