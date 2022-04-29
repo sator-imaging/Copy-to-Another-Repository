@@ -76,7 +76,7 @@ runs:
     - run: git -C "${{ env.TMP_DSTDIR }}" checkout -b "${{ env.PR_BRANCH }}"
       shell: bash
 
-    - run: mkdir "${{ env.TMP_DSTDIR }}/${{ inputs.output-directory }}"
+    - run: mkdir -p "${{ env.TMP_DSTDIR }}/${{ inputs.output-directory }}"
       shell: bash
     - run: mv -f "${{ env.TMP_SRCDIR }}/${{ inputs.target-filepath }}" "${{ env.TMP_DSTDIR }}/${{ inputs.output-directory }}"
       shell: bash
