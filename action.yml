@@ -46,12 +46,12 @@ runs:
   - uses: actions/checkout@v3
     with:
       persist-credentials: false
-      path: "./source"
+      path: "${{ env.TMP_SRCDIR }}"
 
   - uses: actions/checkout@v3
     with:
       persist-credentials: false
-      path: "./dest"
+      path: "${{ env.TMP_DSTDIR }}"
       repository: "${{ inputs.output-repo }}"
 
   - run: ls .
@@ -66,21 +66,21 @@ runs:
 
   - run: cd "${{ env.TMP_DSTDIR }}"
     shell: bash
-  - run: ls .
+  - run: cd "${{ env.TMP_DSTDIR }}" & ls .
     shell: bash
 
-  - run: git checkout -b "${PR_BRANCH}"
+  - run: cd "${{ env.TMP_DSTDIR }}" & git checkout -b "${PR_BRANCH}"
     shell: bash
 
 
-  - run: mkdir "${{ inputs.output-directory }}"
+  - run: cd "${{ env.TMP_DSTDIR }}" & mkdir "${{ inputs.output-directory }}"
     shell: bash
-  - run: mv -f "../${TMP_SRCDIR}/${{ inputs.target-filepath }}" "${{ inputs.output-directory }}"
+  - run: cd "${{ env.TMP_DSTDIR }}" & mv -f "../${{ env.TMP_SRCDIR }}/${{ inputs.target-filepath }}" "${{ inputs.output-directory }}"
     shell: bash
 
-  - run: git add "."
+  - run: cd "${{ env.TMP_DSTDIR }}" & git add "."
     shell: bash
-  - run: git commit -am "${{ github.repository }} at `date`"
+  - run: cd "${{ env.TMP_DSTDIR }}" & git commit -am "${{ github.repository }} at `date`"
     shell: bash
-  - run: git push origin HEAD
+  - run: cd "${{ env.TMP_DSTDIR }}" & git push origin HEAD
     shell: bash
