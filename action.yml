@@ -51,10 +51,6 @@ runs:
       repository: "${{ inputs.output-repo }}"
       path: "${{ env.TMP_DSTDIR }}"
 
-  - name: Update Env
-    run: echo "PR_BRANCH=" >> $GITHUB_ENV
-      shell: bash
-
   - name: Commit & PR
     run: git config --global user.name "${{ inputs.git-name }}"
       shell: bach
