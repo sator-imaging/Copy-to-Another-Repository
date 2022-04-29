@@ -6,7 +6,7 @@
 ## Usage
 
 Create GitHub Actions like as follows.
-See [action.yml](action.yml) for further details.
+See [action.yml](https://github.com/sator-imaging/Copy-to-Another-Repository/blob/main/action.yml) for further details.
 
 
 ```yaml
