@@ -16,6 +16,10 @@ on:
   push:
     branches: [ master ]
 
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+
 jobs:
   main:
     runs-on: ubuntu-latest
