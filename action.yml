@@ -32,7 +32,7 @@ inputs:
     required: false
     default: "devnull@inter.net"
   git-token:
-    default: "${{ secrets.D2AR_TOKEN }}"
+    default: ""
 
 
 env:
