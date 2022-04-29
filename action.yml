@@ -21,7 +21,7 @@ inputs:
   output-directory:
     default: "${{ github.event.repository.name }}"
   pr-branch-prefix:
-    default: "${{ github.event.repository.name }}"
+    default: "actions/${{ github.event.repository.name }}"
   pr-title:
     default: "GitHub Actions: ${{ github.event.repository.name }}"
   pr-message:
