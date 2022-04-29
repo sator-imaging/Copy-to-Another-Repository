@@ -33,12 +33,16 @@ inputs:
     description: "Personal Access Token for Output Repository"
 
 
+env:
+  TMP_SRCDIR: './source'
+  TMP_DSTDIR: './dest'
+
 runs:
   using: 'composite'
-  env:
-    TMP_SRCDIR: './source'
-    TMP_DSTDIR: './dest'
   steps:
+    - run: echo "source/dest: ${TMP_SRCDIR}/${TMP_DSTDIR}"
+      shell: bash
+
     - uses: actions/checkout@v3
       with:
         persist-credentials: false
