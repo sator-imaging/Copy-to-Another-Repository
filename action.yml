@@ -79,9 +79,9 @@ runs:
   - run: mv -f "${{ env.TMP_SRCDIR }}/${{ inputs.target-filepath }}" "${{ env.TMP_DSTDIR }}/${{ inputs.output-directory }}"
     shell: bash
 
-  - run: git -C "${{ env.DSTDIR }}" add "${{ env.TMP_DSTDIR }}/${{ inputs.output-directory }}"
+  - run: git -C "${{ env.TMP_DSTDIR }}" add "${{ env.TMP_DSTDIR }}/${{ inputs.output-directory }}"
     shell: bash
-  - run: git -C "${{ env.DSTDIR }}" commit -am "${{ github.repository }} at `date`"
+  - run: git -C "${{ env.TMP_DSTDIR }}" commit -am "${{ github.repository }} at `date`"
     shell: bash
-  - run: git -C "${{ env.DSTDIR }}" push origin HEAD
+  - run: git -C "${{ env.TMP_DSTDIR }}" push origin HEAD
     shell: bash
