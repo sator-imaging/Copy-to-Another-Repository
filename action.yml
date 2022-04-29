@@ -33,19 +33,24 @@ inputs:
     description: "Personal Access Token for Output Repository"
 
 
+env:
+  TMP_SRCDIR: './source'
+  TMP_DSTDIR: './dest'
+  
+
 runs:
   using: 'composite'
   steps:
   - uses: actions/checkout@v3
     with:
       persist-credentials: false
-      path: "./source"
+      path: "${{ env.TMP_SRCDIR }}"
 
   - uses: actions/checkout@v3
     with:
       persist-credentials: false
       repository: "${{ inputs.output-repo }}"
-      path: "./target"
+      path: "${{ env.TMP_DSTDIR }}"
 
   - run: echo "PR_BRANCH=${{ inputs.pr-branch-prefix }}---$(date +'%Y-%m-%d--%H-%M-%S')" >> $GITHUB_ENV
     shell: bash
@@ -57,14 +62,16 @@ runs:
   - run: git config --global url."https://${{ inputs.git-token }}@github.com/".insteadOf "https://github.com/"
     shell: bash
 
-  - run: cd "./target"
+  - run: cd "${{ env.TMP_DSTDIR }}"
     shell: bash
   - run: git checkout -b "${PR_BRANCH}"
+    shell: bash
+  - run: echo "$PR_BRANCH"
     shell: bash
 
   - run: mkdir "${{ inputs.output-directory }}"
     shell: bash
-  - run: mv -f "../source/${{ inputs.target-filepath }}" "${{ inputs.output-directory }}"
+  - run: mv -f "../${{ env.TMP_SRCDIR }}/${{ inputs.target-filepath }}" "${{ inputs.output-directory }}"
     shell: bash
 
   - run: git add "."
