@@ -36,7 +36,6 @@ inputs:
 env:
   TMP_SRCDIR: './source'
   TMP_DSTDIR: './dest'
-  PR_BRANCH: "${{ inputs.pr-branch-prefix }}---$(date +'%Y-%m-%d--%H-%M-%S')"
   
 
 runs:
