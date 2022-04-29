@@ -53,28 +53,28 @@ runs:
 
   - name: Commit & PR
     run: git config --global user.name "${{ inputs.git-name }}"
-      shell: bach
+      shell: bash
     run: git config --global user.email "${{ inputs.git-email }}"
-      shell: bach
+      shell: bash
     run: git config --global url."https://${{ inputs.git-token }}@github.com/".insteadOf "https://github.com/"
-      shell: bach
+      shell: bash
 
     run: cd "${TMP_DSTDIR}"
-      shell: bach
+      shell: bash
     run: git checkout -b "${{ inputs.pr-branch-prefix }}---$(date +'%Y-%m-%d--%H-%M-%S')"  # branch name must be same with curl JSON.head.
-      shell: bach
+      shell: bash
 
     run: mkdir "${{ inputs.output-directory }}"
-      shell: bach
+      shell: bash
     run: mv -f "../${TMP_SRCDIR}/${{ inputs.target-filepath }}" "${{ inputs.output-directory }}"
-      shell: bach
+      shell: bash
 
     run: git add "."
-      shell: bach
+      shell: bash
     run: git commit -am "${{ github.repository }} at `date`"
-      shell: bach
+      shell: bash
     run: git push origin HEAD
-      shell: bach
+      shell: bash
 
     run: curl -X POST \
         -H 'Accept: application/vnd.github.v3+json' \
