@@ -36,13 +36,13 @@ inputs:
 
 runs:
   using: 'composite'
-  env:
-    TMP_SRCDIR: './source'
-    TMP_DSTDIR: './dest'
-  defaults:
-    run:
-      shell: bash
   steps:
+    env:
+      TMP_SRCDIR: './source'
+      TMP_DSTDIR: './dest'
+    defaults:
+      run:
+        shell: bash
   - uses: actions/checkout@v3
     with:
       persist-credentials: false
