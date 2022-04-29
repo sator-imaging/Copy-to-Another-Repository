@@ -56,6 +56,7 @@ runs:
 
   - run: ls .
     shell: bash
+
   - run: git config --global user.name "${{ inputs.git-name }}"
     shell: bash
   - run: git config --global user.email "${{ inputs.git-email }}"
@@ -63,11 +64,12 @@ runs:
   - run: git config --global url."https://${{ inputs.git-token }}@github.com/".insteadOf "https://github.com/"
     shell: bash
 
-  - run: cd "$TMP_DSTDIR"
+  - run: cd "${TMP_DSTDIR}"
     shell: bash
   - run: git checkout -b "${PR_BRANCH}"
     shell: bash
-  - run: echo "$PR_BRANCH"
+
+  - run: ls .
     shell: bash
 
   - run: mkdir "${{ inputs.output-directory }}"
