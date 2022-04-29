@@ -46,12 +46,12 @@ runs:
   - uses: actions/checkout@v3
     with:
       persist-credentials: false
-      path: "$TMP_SRCDIR"
+      path: "./source"
 
   - uses: actions/checkout@v3
     with:
       persist-credentials: false
-      path: "$TMP_DSTDIR"
+      path: "./dest"
       repository: "${{ inputs.output-repo }}"
 
   - run: git config --global user.name "${{ inputs.git-name }}"
