@@ -52,7 +52,7 @@ runs:
       path: "${{ env.TMP_DSTDIR }}"
 
   - name: Update Env
-    run: echo "PR_BRANCH=${{ inputs.pr-branch-prefix }}---$(date +'%Y-%m-%d--%H-%M-%S')" >> $GITHUB_ENV
+    run: echo "PR_BRANCH=" >> $GITHUB_ENV
       shell: bash
 
   - name: Commit & PR
@@ -65,7 +65,7 @@ runs:
 
     run: cd "${TMP_DSTDIR}"
       shell: bach
-    run: git checkout -b "${PR_BRANCH}"
+    run: git checkout -b "${{ inputs.pr-branch-prefix }}---$(date +'%Y-%m-%d--%H-%M-%S')"  # branch name must be same with curl JSON.head.
       shell: bach
 
     run: mkdir "${{ inputs.output-directory }}"
@@ -83,5 +83,5 @@ runs:
     run: curl -X POST \
         -H 'Accept: application/vnd.github.v3+json' \
         "https://${{ inputs.git-token }}@api.github.com/repos/${{ inputs.output-repo }}/pulls" \
-        -d "{ \"title\":\"${{ inputs.pr-title }}\", \"body\":\"${{ inputs.pr-message }}\", \"head\":\"${PR_BRANCH}\", \"base\":\"${{ inputs.output-branch }}\" }"
+        -d "{ \"title\":\"${{ inputs.pr-title }}\", \"body\":\"${{ inputs.pr-message }}\", \"head\":\"${{ inputs.pr-branch-prefix }}---$(date +'%Y-%m-%d--%H-%M-%S')\", \"base\":\"${{ inputs.output-branch }}\" }"
       shell: bash
