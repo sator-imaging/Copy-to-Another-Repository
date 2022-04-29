@@ -66,11 +66,12 @@ runs:
 
   - run: cd "${TMP_DSTDIR}"
     shell: bash
+  - run: ls .
+    shell: bash
+
   - run: git checkout -b "${PR_BRANCH}"
     shell: bash
 
-  - run: ls .
-    shell: bash
 
   - run: mkdir "${{ inputs.output-directory }}"
     shell: bash
