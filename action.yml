@@ -66,21 +66,22 @@ runs:
 
   - run: cd "${{ env.TMP_DSTDIR }}"
     shell: bash
-  - run: cd "${{ env.TMP_DSTDIR }}" & ls .
+    # we cannot change current directory
+  - run: ls .
     shell: bash
 
-  - run: cd "${{ env.TMP_DSTDIR }}" & git checkout -b "${PR_BRANCH}"
+  - run: git -C "${{ env.DSTDIR }}" checkout -b "${PR_BRANCH}"
     shell: bash
 
 
-  - run: cd "${{ env.TMP_DSTDIR }}" & mkdir "${{ inputs.output-directory }}"
+  - run: mkdir "${{ env.TMP_DSTDIR }}/${{ inputs.output-directory }}"
     shell: bash
-  - run: cd "${{ env.TMP_DSTDIR }}" & mv -f "../${{ env.TMP_SRCDIR }}/${{ inputs.target-filepath }}" "${{ inputs.output-directory }}"
+  - run: mv -f "${{ env.TMP_SRCDIR }}/${{ inputs.target-filepath }}" "${{ env.TMP_DSTDIR }}/${{ inputs.output-directory }}"
     shell: bash
 
-  - run: cd "${{ env.TMP_DSTDIR }}" & git add "."
+  - run: git -C "${{ env.DSTDIR }}" add "${{ env.TMP_DSTDIR }}/${{ inputs.output-directory }}"
     shell: bash
-  - run: cd "${{ env.TMP_DSTDIR }}" & git commit -am "${{ github.repository }} at `date`"
+  - run: git -C "${{ env.DSTDIR }}" commit -am "${{ github.repository }} at `date`"
     shell: bash
-  - run: cd "${{ env.TMP_DSTDIR }}" & git push origin HEAD
+  - run: git -C "${{ env.DSTDIR }}" push origin HEAD
     shell: bash
