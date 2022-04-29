@@ -17,7 +17,7 @@ inputs:
     required: true
     description: 'Branch name on output repository to create pull request.'
   commit-message-prefix:
-    default: '[actions]'
+    default: '[actions] '
   output-directory:
     default: "${{ github.event.repository.name }}"
   pr-branch-prefix:
@@ -25,7 +25,7 @@ inputs:
   pr-title:
     default: "GitHub Actions: ${{ github.event.repository.name }}"
   pr-message:
-    default: "${{ github.workflow }}"
+    default: "${{ github.repositoryUrl }}\n${{ github.workflow }}${{ github.action }}"
   git-name:
     default: "${{ github.actor }}"
   git-email:
@@ -83,7 +83,7 @@ runs:
 
     - run: git -C "${{ env.TMP_DSTDIR }}" add "${{ inputs.output-directory }}/."
       shell: bash
-    - run: git -C "${{ env.TMP_DSTDIR }}" commit -am "${{ inputs.commit-message-prefix }}${{ github.action }}"
+    - run: git -C "${{ env.TMP_DSTDIR }}" commit -am "${{ inputs.commit-message-prefix }}${{ github.event.repository.name }}"
       shell: bash
     - run: git -C "${{ env.TMP_DSTDIR }}" push origin HEAD
       shell: bash
