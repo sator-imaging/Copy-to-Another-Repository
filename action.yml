@@ -81,7 +81,14 @@ runs:
 
   - run: git -C "${{ env.TMP_DSTDIR }}" add "${{ inputs.output-directory }}/."
     shell: bash
-  - run: git -C "${{ env.TMP_DSTDIR }}" commit -am "${{ github.repository }} at `date`"
+  - run: git -C "${{ env.TMP_DSTDIR }}" commit -am "${{ inputs.target_filepath }}"
     shell: bash
   - run: git -C "${{ env.TMP_DSTDIR }}" push origin HEAD
     shell: bash
+
+  - run curl -X POST \
+        -H 'Accept: application/vnd.github.v3+json' \
+        "https://${{ inputs.git-token }}@api.github.com/repos/${{ inputs.output-repo }}/pulls" \
+        -d "{ \"title\":\"${{ inputs.pr-title }}\", \"body\":\"${{ inputs.pr-message }}\", \"head\":\"${{ env.PR_BRANCH }}\", \"base\":\"${{ inputs.output-branch }}\" }"
+    shell: bash
+    
