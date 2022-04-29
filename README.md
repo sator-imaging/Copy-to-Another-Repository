@@ -33,10 +33,10 @@ jobs:
           commit-message-prefix: '[actions]'
           output-directory: "${{ github.event.repository.name }}"   # copy file into sub directory
           pr-branch-prefix: "${{ github.event.repository.name }}"   # branch name prefix followed by date and time
-          pr-title: "GitHub Actions: ${{ github.workflow }}"
-          pr-message: ''
+          pr-title: "GitHub Actions: ${{ github.event.repository.name }}"
+          pr-message: "${{ github.workflow }}"
           git-name: "${{ github.actor }}"
-          git-email: 'your-email-address@users.noreply.github.com'  # devnull@inter.net by default.
+          git-email: 'your-email-address@users.noreply.github.com'  # user icon is not displayed if not set
 ```
 
 
