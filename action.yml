@@ -33,18 +33,15 @@ inputs:
     default: ""
 
 
-env:
-  TMP_SRCDIR: './source'
-  TMP_DSTDIR: './dest'
-
-
-defaults:
-  run:
-    shell: bash
-
 
 runs:
   using: 'composite'
+  env:
+    TMP_SRCDIR: './source'
+    TMP_DSTDIR: './dest'
+  defaults:
+    run:
+      shell: bash
   steps:
   - uses: actions/checkout@v3
     with:
