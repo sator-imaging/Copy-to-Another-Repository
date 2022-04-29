@@ -36,46 +36,47 @@ inputs:
 runs:
   using: 'composite'
   steps:
-  - run: echo "PR_BRANCH=${{ inputs.pr-branch-prefix }}---$(date +'%Y-%m-%d--%H-%M-%S')" >> $GITHUB_ENV
+    run: echo "PR_BRANCH=${{ inputs.pr-branch-prefix }}---$(date +'%Y-%m-%d--%H-%M-%S')" >> $GITHUB_ENV
     shell: bash
-  - run: echo "TMP_SRCDIR=./source" >> $GITHUB_ENV
+    run: echo "TMP_SRCDIR=./source" >> $GITHUB_ENV
     shell: bash
-  - run: echo "TMP_DSTDIR=./dest" >> $GITHUB_ENV
+    run: echo "TMP_DSTDIR=./dest" >> $GITHUB_ENV
     shell: bash
 
-  - uses: actions/checkout@v3
+    uses: actions/checkout@v3
     with:
       persist-credentials: false
       path: "./source"
 
-  - uses: actions/checkout@v3
+    uses: actions/checkout@v3
     with:
       persist-credentials: false
       path: "./dest"
       repository: "${{ inputs.output-repo }}"
 
-  - run: git config --global user.name "${{ inputs.git-name }}"
+    run: ls .
+    run: git config --global user.name "${{ inputs.git-name }}"
     shell: bash
-  - run: git config --global user.email "${{ inputs.git-email }}"
+    run: git config --global user.email "${{ inputs.git-email }}"
     shell: bash
-  - run: git config --global url."https://${{ inputs.git-token }}@github.com/".insteadOf "https://github.com/"
-    shell: bash
-
-  - run: cd "$TMP_DSTDIR"
-    shell: bash
-  - run: git checkout -b "${PR_BRANCH}"
-    shell: bash
-  - run: echo "$PR_BRANCH"
+    run: git config --global url."https://${{ inputs.git-token }}@github.com/".insteadOf "https://github.com/"
     shell: bash
 
-  - run: mkdir "${{ inputs.output-directory }}"
+    run: cd "$TMP_DSTDIR"
     shell: bash
-  - run: mv -f "../${TMP_SRCDIR}/${{ inputs.target-filepath }}" "${{ inputs.output-directory }}"
+    run: git checkout -b "${PR_BRANCH}"
+    shell: bash
+    run: echo "$PR_BRANCH"
     shell: bash
 
-  - run: git add "."
+    run: mkdir "${{ inputs.output-directory }}"
     shell: bash
-  - run: git commit -am "${{ github.repository }} at `date`"
+    run: mv -f "../${TMP_SRCDIR}/${{ inputs.target-filepath }}" "${{ inputs.output-directory }}"
     shell: bash
-  - run: git push origin HEAD
+
+    run: git add "."
+    shell: bash
+    run: git commit -am "${{ github.repository }} at `date`"
+    shell: bash
+    run: git push origin HEAD
     shell: bash
