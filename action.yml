@@ -44,7 +44,7 @@ runs:
 
     - run: echo "PR_BRANCH=${{ inputs.pr-branch-prefix }}---$(date +'%Y-%m-%d--%H-%M-%S')" >> $GITHUB_ENV
       shell: bash
-    - run: echo "ACTION_REPO=${$GITHUB_ACTION//_//}" >> $GITHUB_ENV
+    - run: echo "ACTION_REPO=$( echo $GITHUB_ACTION | sed s/_/\//g )" >> $GITHUB_ENV
       shell: bash
     - run: echo "PR_MESSAGE=${{ inputs.pr-message }}\\n${{ env.ACTION_REPO }}" >> $GITHUB_ENV
       shell: bash
