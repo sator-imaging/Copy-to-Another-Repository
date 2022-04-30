@@ -25,7 +25,7 @@ inputs:
   pr-title:
     default: "GitHub Actions: ${{ github.event.repository.name }}"
   pr-message:
-    default: "Workflow: ${{ github.workflow }} on ${{ github.server_url }}/${{ github.repository }}"
+    default: "${{ github.workflow }} on ${{ github.server_url }}/${{ github.repository }}"
   git-name:
     default: "${{ github.actor }}"
   git-email:
