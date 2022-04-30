@@ -68,9 +68,9 @@ runs:
       shell: bash
       working-directory: "${{ env.TMP_DSTDIR }}"
       if: ${{ github.event_name == 'push' }}
-    - run: echo "github.event.head_commit.added[0]: ${{ github.event.head_commit.added[0] }}"
+    - run: echo "${{ github.event.head_commit.added[0] }}"
       shell: bash
-    - run: echo "github.event.head_commit.modified[0]: ${{ github.event.head_commit.modified[0] }}"
+    - run: echo "${{ github.event.head_commit.modified[0] }}"
       shell: bash
 
     - run: git config --global user.name "${{ inputs.git-name }}"
