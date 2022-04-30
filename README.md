@@ -3,6 +3,7 @@
 `Copy-to-Another-Repository` is reusable workflow to copy selected file to another repository and create Pull Request (PR) to merge.
 
 
+
 ## Usage
 
 Create GitHub Actions like as follows.
@@ -44,6 +45,19 @@ jobs:
           git-name: "${{ github.actor }}"
           git-email: 'your-email-address@users.noreply.github.com'   # user icon is not displayed if not set
 ```
+
+
+
+## Learning Resources
+
+- [Metadata syntax for GitHub Actions](https://docs.github.com/en/actions/creating-actions/metadata-syntax-for-github-actions)
+  - [`runs` for composite actions](https://docs.github.com/en/actions/creating-actions/metadata-syntax-for-github-actions#runs-for-composite-actions)
+- [Contexts](https://docs.github.com/en/actions/learn-github-actions/contexts)
+- [Environment variables](https://docs.github.com/en/actions/learn-github-actions/environment-variables)
+  - [Default environment variables](https://docs.github.com/en/actions/learn-github-actions/environment-variables#default-environment-variables)
+- [Webhook events and payloads](https://docs.github.com/en/developers/webhooks-and-events/webhooks/webhook-events-and-payloads)
+- [Workflow commands for GitHub Actions](https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions)
+
 
 
 ## Copyright
