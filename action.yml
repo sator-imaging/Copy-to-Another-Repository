@@ -77,7 +77,8 @@ runs:
       working-directory: "${{ env.TMP_DSTDIR }}"
 
     - run: echo "${{ github.event.commits[0] }}"
-      run: echo "${{ github.event.commits[0].url }}"
+      shell: bash
+    - run: echo "${{ github.event.commits[0].url }}"
       shell: bash
     - run: echo "${{ github.event.commits[0].modified }}"
       shell: bash
