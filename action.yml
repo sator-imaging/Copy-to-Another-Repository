@@ -25,7 +25,7 @@ inputs:
   pr-title:
     default: "GitHub Actions: ${{ github.event.repository.name }}"
   pr-message:
-    default: "${{ github.repositoryUrl }}\\n${{ github.workflow }}${{ github.action }}"
+    default: "repository: ${{ github.server_url }}/${{ github.repository }}\\nworkflow: ${{ github.workflow }}\\naction: ${{ github.server_url }}/${{ github.action_repository }}"
   git-name:
     default: "${{ github.actor }}"
   git-email:
@@ -57,8 +57,19 @@ runs:
         path: "${{ env.TMP_DSTDIR }}"
         repository: "${{ inputs.output-repo }}"
 
+    # composite test
     - run: ls .
       shell: bash
+    - run: ls .
+      shell: bash
+      working-directory: "${{ env.TMP_DSTDIR }}"
+      if: ${{ github.event_name == 'push' }}
+    - run: echo "${{ github.event.head_commit.added[0] }}"
+      shell: bash
+      if: ${{ github.event.head_commit.added[0] }}
+    - run: echo "github.event.head_commit.modified[0]"
+      shell: bash
+      if: ${{ github.event.head_commit.modified[0] }}
 
     - run: git config --global user.name "${{ inputs.git-name }}"
       shell: bash

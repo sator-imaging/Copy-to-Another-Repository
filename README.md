@@ -13,11 +13,14 @@ See [action.yml](https://github.com/sator-imaging/Copy-to-Another-Repository/blo
 name: GitHub-Actions-Name
 
 on:
+  workflow_dispatch:   # Allows you to run this workflow manually from the Actions tab
   push:
-    branches: [ master ]
-
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
+    branches: [ main ]
+    branches-ignore:
+    tags:
+    tags-ignore:
+    paths:
+      - 'README.md'   # limit trigger to the target-filepath
 
 
 jobs:
@@ -38,7 +41,7 @@ jobs:
           output-directory: "${{ github.event.repository.name }}"   # copy file into sub directory
           pr-branch-prefix: "actions/${{ github.event.repository.name }}"   # branch name prefix followed by date and time
           pr-title: "GitHub Actions: ${{ github.event.repository.name }}"
-          pr-message: "${{ github.repositoryUrl }}\\n${{ github.workflow }}${{ github.action }}"
+          pr-message: "repository: ${{ github.server_url }}/${{ github.repository }}\\nworkflow: ${{ github.workflow }}\\naction: ${{ github.server_url }}/${{ github.action_repository }}"
           git-name: "${{ github.actor }}"
           git-email: 'your-email-address@users.noreply.github.com'   # user icon is not displayed if not set
 ```

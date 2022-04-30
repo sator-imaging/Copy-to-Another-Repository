@@ -1,11 +1,14 @@
 name: Deploy2OM
 
 on:
+  workflow_dispatch:   # Allows you to run this workflow manually from the Actions tab
   push:
     branches: [ main ]
-
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
+    branches-ignore:
+    tags:
+    tags-ignore:
+    paths:
+      - 'README.md'   # limit trigger to the target-filepath
 
 jobs:
   main:
