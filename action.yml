@@ -9,10 +9,10 @@ branding:
 inputs:
   target-filepath:
     required: true
-    description: 'README.md for example.'
+    description: 'File path to copy.'
   output-repo:
     required: true
-    description: 'SatorImaging/OpenManual'
+    description: 'Owner/AnotherRepository'
   output-branch:
     required: true
     description: 'Branch name on output repository to create pull request.'
@@ -25,15 +25,15 @@ inputs:
   pr-title:
     default: "GitHub Actions: ${{ github.event.repository.name }}"
   pr-message:
-    default: "repository: ${{ github.server_url }}/${{ github.repository }}\\nworkflow: ${{ github.workflow }}\\naction: ${{ github.server_url }}/${{ github.action_repository }}"
+    default: "repository: ${{ github.server_url }}/${{ github.repository }}\\nworkflow: ${{ github.workflow }}\\naction: ${{ github.server_url }}/${{ github.action_path }}"
   git-name:
     default: "${{ github.actor }}"
   git-email:
-    description: 'Use your "@users.noreply.github.com" email address if you want your account icon shown in commit messages.'
+    description: 'Use your "@users.noreply.github.com" address if you want your icon shown in commit messages.'
     default: 'devnull@inter.net'
   git-token:
     required: true
-    description: 'Personal Access Token used for commit/create PR on output repository.'
+    description: 'Personal Access Token used to commit/create PR on output repository.'
 
 
 runs:
@@ -64,12 +64,14 @@ runs:
       shell: bash
       working-directory: "${{ env.TMP_DSTDIR }}"
       if: ${{ github.event_name == 'push' }}
-    - run: echo "${{ github.event.head_commit.added[0] }}"
+    - run: ls .
       shell: bash
-      if: ${{ github.event.head_commit.added[0] }}
-    - run: echo "github.event.head_commit.modified[0]"
+      working-directory: "${{ env.TMP_DSTDIR }}"
+      if: ${{ github.event_name == 'push' }}
+    - run: echo "github.event.head_commit.added[0]: ${{ github.event.head_commit.added[0] }}"
       shell: bash
-      if: ${{ github.event.head_commit.modified[0] }}
+    - run: echo "github.event.head_commit.modified[0]: ${{ github.event.head_commit.modified[0] }}"
+      shell: bash
 
     - run: git config --global user.name "${{ inputs.git-name }}"
       shell: bash

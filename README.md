@@ -41,7 +41,7 @@ jobs:
           output-directory: "${{ github.event.repository.name }}"   # copy file into sub directory
           pr-branch-prefix: "actions/${{ github.event.repository.name }}"   # branch name prefix followed by date and time
           pr-title: "GitHub Actions: ${{ github.event.repository.name }}"
-          pr-message: "repository: ${{ github.server_url }}/${{ github.repository }}\\nworkflow: ${{ github.workflow }}\\naction: ${{ github.server_url }}/${{ github.action_repository }}"
+          pr-message: "repository: ${{ github.server_url }}/${{ github.repository }}\\nworkflow: ${{ github.workflow }}\\naction: ${{ github.server_url }}/${{ github.action_path }}"
           git-name: "${{ github.actor }}"
           git-email: 'your-email-address@users.noreply.github.com'   # user icon is not displayed if not set
 ```
