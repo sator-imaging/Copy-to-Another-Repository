@@ -21,7 +21,9 @@ on:
     tags:
     tags-ignore:
     paths:
-      - 'README.md'   # limit trigger to the target-filepath
+      - 'README.md'  # limit trigger to the target-filepath.
+                     # It's not elegant to set same value in two options but
+                     # there is no way to retrieve this value in composite action.
 
 jobs:
   main:
