@@ -25,7 +25,7 @@ inputs:
   pr-title:
     default: "GitHub Actions: ${{ github.event.repository.name }}"
   pr-message:
-    default: "repository: ${{ github.server_url }}/${{ github.repository }}\\nworkflow: ${{ github.workflow }}\\naction: ${{ github.server_url }}/${{ github.action_path }}"
+    default: "repository: ${{ github.server_url }}/${{ github.repository }}\\nworkflow: ${{ github.workflow }}"
   git-name:
     default: "${{ github.actor }}"
   git-email:
@@ -40,6 +40,8 @@ runs:
   using: 'composite'
   steps:
     - run: echo "PR_BRANCH=${{ inputs.pr-branch-prefix }}---$(date +'%Y-%m-%d--%H-%M-%S')" >> $GITHUB_ENV
+      shell: bash
+    - run: echo "PR_MESSAGE=${{ inputs.pr-message }}\naction:\ ${{ github.server_url }}/${{ github.action_repository }}" >> $GITHUB_ENV
       shell: bash
     - run: echo "TMP_SRCDIR=./source" >> $GITHUB_ENV
       shell: bash
@@ -68,7 +70,11 @@ runs:
       shell: bash
       working-directory: "${{ env.TMP_DSTDIR }}"
       if: ${{ github.event_name == 'push' }}
+    - run: echo "${{ github.event.head_commit.added }}"
+      shell: bash
     - run: echo "${{ github.event.head_commit.added[0] }}"
+      shell: bash
+    - run: echo "${{ github.event.head_commit.modified }}"
       shell: bash
     - run: echo "${{ github.event.head_commit.modified[0] }}"
       shell: bash
@@ -102,5 +108,5 @@ runs:
       shell: bash
 
     # adding this will cause syntax error... -H "Accept: application/vnd.github.v3+json"
-    - run: curl -X POST "https://${{ inputs.git-token }}@api.github.com/repos/${{ inputs.output-repo }}/pulls" -d "{ \"title\":\"${{ inputs.pr-title }}\", \"body\":\"${{ inputs.pr-message }}\", \"head\":\"${{ env.PR_BRANCH }}\", \"base\":\"${{ inputs.output-branch }}\" }"
+    - run: curl -X POST "https://${{ inputs.git-token }}@api.github.com/repos/${{ inputs.output-repo }}/pulls" -d "{ \"title\":\"${{ inputs.pr-title }}\", \"body\":\"${{ env.PR_MESSAGE }}\", \"head\":\"${{ env.PR_BRANCH }}\", \"base\":\"${{ inputs.output-branch }}\" }"
       shell: bash
