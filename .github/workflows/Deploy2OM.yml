@@ -8,10 +8,9 @@ on:
     tags:
     tags-ignore:
     paths:
-      - 'README.md'   # limit trigger to the target-filepath
+      #- 'README.md'   # limit trigger to the target-filepath
 
-permissions:
-  contents: read
+permissions: write-all
 
 jobs:
   main:
