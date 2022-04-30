@@ -77,13 +77,13 @@ runs:
 
     - run: echo "${{ github.event.commits[0] }}"
       shell: bash
-    - run: echo "${{ github.event.commits[0][modified] }}"
+    - run: echo "${{ github.event.commits[0]['modified'] }}"
       shell: bash
-    - run: echo "${{ github.event.commits[0][modified][0] }}"
+    - run: echo "${{ github.event.commits[0]['modified'][0] }}"
       shell: bash
-    - run: echo "${{ github.event.commits[0][modified][0].name }}"
+    - run: echo "${{ github.event.commits[0]['modified'][0].name }}"
       shell: bash
-    - run: echo "${{ github.event.commits[0][modified][0].path }}"
+    - run: echo "${{ github.event.commits[0]['modified'][0].path }}"
       shell: bash
 
     - run: git config --global user.name "${{ inputs.git-name }}"
