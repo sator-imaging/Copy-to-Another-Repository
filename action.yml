@@ -88,6 +88,10 @@ runs:
       shell: bash
     - run: echo "${{ github.event.commits[0].modified }}"
       shell: bash
+    - run: echo "${{ github.event.head_commit }}"
+      shell: bash
+    - run: cat "${{ github.event_path }}"
+      shell: bash
 
     - run: git config --global user.name "${{ inputs.git-name }}"
       shell: bash
