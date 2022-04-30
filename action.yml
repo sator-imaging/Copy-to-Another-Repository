@@ -65,7 +65,7 @@ runs:
         repository: "${{ inputs.output-repo }}"
 
     # composite test
-    - name composite test
+    - name: composite test
       run: ls .
       shell: bash
       if: ${{ github.event_name == 'push' }}
