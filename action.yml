@@ -25,7 +25,7 @@ inputs:
   pr-title:
     default: "GitHub Actions: ${{ github.event.repository.name }}"
   pr-message:
-    default: "repository: ${{ github.server_url }}/${{ github.repository }}\\nworkflow: ${{ github.workflow }}"
+    default: "Workflow: ${{ github.workflow }} ${{ github.server_url }}/${{ github.repository }}"
   git-name:
     default: "${{ github.actor }}"
   git-email:
@@ -44,8 +44,7 @@ runs:
 
     - run: echo "PR_BRANCH=${{ inputs.pr-branch-prefix }}---$(date +'%Y-%m-%d--%H-%M-%S')" >> $GITHUB_ENV
       shell: bash
-    # do NOT remove backslash AFTER coron.
-    - run: echo "PR_MESSAGE=${{ inputs.pr-message }}\\n  action ${{ github.server_url }}/${{ github.action_path }}" >> $GITHUB_ENV
+    - run: echo "PR_MESSAGE=${{ inputs.pr-message }}\\n${{ github.action }} ${{ github.server_url }}/${{ github.action_repository }}" >> $GITHUB_ENV
       shell: bash
     - run: echo "TMP_SRCDIR=./source" >> $GITHUB_ENV
       shell: bash
@@ -66,21 +65,28 @@ runs:
     # composite test
     - run: ls .
       shell: bash
-    - run: ls .
-      shell: bash
-      working-directory: "${{ env.TMP_DSTDIR }}"
       if: ${{ github.event_name == 'push' }}
     - run: ls .
       shell: bash
       working-directory: "${{ env.TMP_DSTDIR }}"
-      if: ${{ github.event_name == 'push' }}
+    - run: ls .
+      shell: bash
+      working-directory: "${{ env.TMP_DSTDIR }}"
     - run: echo "${{ github.event }}"
+      shell: bash
+    - run: echo "${{ github.event[0] }}"
       shell: bash
     - run: echo "${{ github.event.commits }}"
       shell: bash
     - run: echo "${{ github.event.head_commit }}"
       shell: bash
-    - run: echo "${{ github.event[0] }}"
+    - run: echo "${{ github.event.head_commit.added }}"
+      shell: bash
+    - run: echo "${{ github.event.head_commit.added[0] }}"
+      shell: bash
+    - run: echo "${{ github.event.head_commit.modified }}"
+      shell: bash
+    - run: echo "${{ github.event.head_commit.modified[0] }}"
       shell: bash
 
     - run: git config --global user.name "${{ inputs.git-name }}"
