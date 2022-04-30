@@ -43,8 +43,6 @@ runs:
       shell: bash
 
     # no way to retrieve added/modified files from github.event object.
-    - run: cat "${{ github.event }}"
-      shell: bash
     - run: cat "${{ github.event_path }}"
       shell: bash
 
