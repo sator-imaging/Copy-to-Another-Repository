@@ -46,6 +46,8 @@ runs:
       shell: bash
     - run: echo "ACTION_REPO=$( echo $GITHUB_ACTION | sed 's/_/\//g' )" >> $GITHUB_ENV
       shell: bash
+    - run: echo "ACTION_REPO=${${{ env.ACTION_REPO }}/\//}" >> $GITHUB_ENV
+      shell: bash
     - run: echo "PR_MESSAGE=${{ inputs.pr-message }}\\n${{ env.ACTION_REPO }}" >> $GITHUB_ENV
       shell: bash
     - run: echo "TMP_SRCDIR=./source" >> $GITHUB_ENV
@@ -80,11 +82,11 @@ runs:
       shell: bash
     - run: echo "${{ github.event.commits[0].url }}"
       shell: bash
-    - run: echo "${{ github.event.commits[0]['modified'][0] }}"
+    - run: echo "${{ github.event.commits[0].modified }}"
       shell: bash
-    - run: echo "${{ github.event.commits[0]['modified'][0].name }}"
+    - run: echo "${{ github.event.commits[0].modified[0] }}"
       shell: bash
-    - run: echo "${{ github.event.commits[0]['modified'][0].path }}"
+    - run: echo "${{ github.event.commits[0].modified[0].path }}"
       shell: bash
 
     - run: git config --global user.name "${{ inputs.git-name }}"
