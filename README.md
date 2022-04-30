@@ -13,7 +13,7 @@ See [action.yml](https://github.com/sator-imaging/Copy-to-Another-Repository/blo
 name: GitHub-Actions-Name
 
 on:
-  workflow_dispatch:   # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch: # Allows you to run this workflow manually from the Actions tab
   push:
     branches: [ main ]
     branches-ignore:
@@ -21,7 +21,6 @@ on:
     tags-ignore:
     paths:
       - 'README.md'   # limit trigger to the target-filepath
-
 
 jobs:
   main:
