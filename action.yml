@@ -41,7 +41,7 @@ runs:
   steps:
     - run: echo "PR_BRANCH=${{ inputs.pr-branch-prefix }}---$(date +'%Y-%m-%d--%H-%M-%S')" >> $GITHUB_ENV
       shell: bash
-    - run: echo "PR_MESSAGE=${{ inputs.pr-message }}\naction:\ ${{ github.server_url }}/${{ github.action_repository }}" >> $GITHUB_ENV
+    - run: echo "PR_MESSAGE=${{ inputs.pr-message }}\\naction: ${{ github.server_url }}/${{ github.action_repository }}" >> $GITHUB_ENV
       shell: bash
     - run: echo "TMP_SRCDIR=./source" >> $GITHUB_ENV
       shell: bash
