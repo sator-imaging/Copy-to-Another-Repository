@@ -39,6 +39,9 @@ inputs:
 runs:
   using: 'composite'
   steps:
+    - run: echo '::echo::on'
+      shell: bash
+
     - run: echo "PR_BRANCH=${{ inputs.pr-branch-prefix }}---$(date +'%Y-%m-%d--%H-%M-%S')" >> $GITHUB_ENV
       shell: bash
     # do NOT remove backslash AFTER coron.
