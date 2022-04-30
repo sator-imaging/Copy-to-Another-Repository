@@ -44,7 +44,7 @@ runs:
 
     - run: echo "PR_BRANCH=${{ inputs.pr-branch-prefix }}---$(date +'%Y-%m-%d--%H-%M-%S')" >> $GITHUB_ENV
       shell: bash
-    - run: echo "ACTION_REPO=$( echo $GITHUB_ACTION | sed s/_/\//g )" >> $GITHUB_ENV
+    - run: echo "ACTION_REPO=$( echo $GITHUB_ACTION | sed 's/_/\//g' )" >> $GITHUB_ENV
       shell: bash
     - run: echo "PR_MESSAGE=${{ inputs.pr-message }}\\n${{ env.ACTION_REPO }}" >> $GITHUB_ENV
       shell: bash
@@ -65,7 +65,8 @@ runs:
         repository: "${{ inputs.output-repo }}"
 
     # composite test
-    - run: ls .
+    - name composite test
+      run: ls .
       shell: bash
       if: ${{ github.event_name == 'push' }}
     - run: ls .
@@ -77,7 +78,7 @@ runs:
 
     - run: echo "${{ github.event.commits[0] }}"
       shell: bash
-    - run: echo "${{ github.event.commits[0]['modified'] }}"
+    - run: echo "${{ github.event.commits[0].url }}"
       shell: bash
     - run: echo "${{ github.event.commits[0]['modified'][0] }}"
       shell: bash
