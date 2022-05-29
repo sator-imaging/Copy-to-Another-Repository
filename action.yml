@@ -56,6 +56,10 @@ runs:
       shell: bash
     - run: echo "TMP_DSTDIR=./dest" >> $GITHUB_ENV
       shell: bash
+    - run: echo "PR_TITLE_APPENDIX= - ${{ inputs.target-filepath }}" >> $GITHUB_ENV
+      shell: bash
+    - run: echo "COMMIT_TITLE_APPENDIX= - ${{ inputs.target-filepath }}" >> $GITHUB_ENV
+      shell: bash
 
     - uses: actions/checkout@v3
       with:
@@ -99,7 +103,7 @@ runs:
       shell: bash
 
     - working-directory: "${{ env.TMP_DSTDIR }}"
-      run: git commit -am "${{ inputs.commit-message-prefix }}${{ github.event.repository.name }}"
+      run: git commit -am "${{ inputs.commit-message-prefix }}${{ github.event.repository.name }}${{ env.COMMIT_TITLE_APPENDIX }}"
       shell: bash
 
     - working-directory: "${{ env.TMP_DSTDIR }}"
@@ -107,5 +111,5 @@ runs:
       shell: bash
 
     # do NOT insert space after colon. colon-space will cause syntax error.
-    - run: curl -X POST -H "Accept:application/vnd.github.v3+json" "https://${{ inputs.git-token }}@api.github.com/repos/${{ inputs.output-repo }}/pulls" -d "{ \"title\":\"${{ inputs.pr-title }}\", \"body\":\"${{ env.PR_MESSAGE }}\", \"head\":\"${{ env.PR_BRANCH }}\", \"base\":\"${{ inputs.output-branch }}\" }"
+    - run: curl -X POST -H "Accept:application/vnd.github.v3+json" "https://${{ inputs.git-token }}@api.github.com/repos/${{ inputs.output-repo }}/pulls" -d "{ \"title\":\"${{ inputs.pr-title }}${{ env.PR_TITLE_APPENDIX }}\", \"body\":\"${{ env.PR_MESSAGE }}\", \"head\":\"${{ env.PR_BRANCH }}\", \"base\":\"${{ inputs.output-branch }}\" }"
       shell: bash
