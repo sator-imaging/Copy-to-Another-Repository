@@ -11,5 +11,7 @@ jobs:
       - uses: actions/checkout@v3
       - name: Tagging
         run: |
+          git config --global user.name "${{ github.actor }}"
+          git config --global user.email "devnull@inter.net"
           git tag -f -a 'v1' -m 'Tagged by GitHub Actions'
           git push --tags
