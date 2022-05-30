@@ -13,7 +13,5 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh release delete "v1" --yes
           gh release create "v1" --notes "Tagged by GitHub Actions"
           git push --tags
-          
