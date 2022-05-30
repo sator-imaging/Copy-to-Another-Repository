@@ -4,6 +4,9 @@ on:
   release:
   workflow_dispatch:
 
+env:
+  TAG: 'v1'
+
 jobs:
   main:
     runs-on: ubuntu-latest
@@ -13,6 +16,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          echo ${{ env.TAG }}
           git config --global user.name "${{ github.actor }}"
           git config --global user.email "devnull@inter.net"
           git tag -f -a 'v1' -m 'Tagged by GitHub Actions'
