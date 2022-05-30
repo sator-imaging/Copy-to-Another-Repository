@@ -1,4 +1,4 @@
-# auto-tagging to latest commit (not release commit)
+name: AutoTagging   # auto-tagging to latest commit (not release commit)
 
 on:
   release:
@@ -10,8 +10,8 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Tagging
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          git config --global user.name "${{ github.actor }}"
-          git config --global user.email "devnull@inter.net"
           git tag -f -a 'v1' -m 'Tagged by GitHub Actions'
           git push --tags
