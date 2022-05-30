@@ -6,6 +6,7 @@ on:
 
 env:
   TAG: 'v1'
+  MESSAGE: 'Tagged by GitHub Actions'
 
 jobs:
   main:
@@ -18,5 +19,5 @@ jobs:
         run: |
           git config --global user.name '${{ github.actor }}'
           git config --global user.email 'devnull@inter.net'
-          git tag -f -a '${{ env.TAG }}' -m 'Tagged by GitHub Actions'
+          git tag -f -a '${{ env.TAG }}' -m '${{ env.MESSAGE }}'
           git push -f --tags
