@@ -1,0 +1,15 @@
+# auto-tagging to latest commit (not release commit)
+
+on:
+  release:
+  workflow_dispatch:
+
+jobs:
+  main:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Tagging
+        run: |
+          git tag -f -a 'v1' -m 'Tagged by GitHub Actions'
+          git push --tags
