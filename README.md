@@ -44,8 +44,8 @@ jobs:
           pr-branch-prefix: "actions/${{ github.event.repository.name }}"   # branch name prefix followed by date and time
           pr-title: "GitHub Actions: ${{ github.event.repository.name }}"   # followed by source repository and file name
           pr-message: "${{ github.workflow }} on ${{ github.server_url }}/${{ github.repository }}"   # followed by action repository
-          git-name: "${{ github.actor }}"
-          git-email: 'your-email-address@users.noreply.github.com'   # user icon is not displayed if not set
+          git-name: "github-actions[bot]"   # your name can be set by ${{ github.actor }}
+          git-email: 'github-actions[bot]@users.noreply.github.com'   # associated user icon is shown in commit page
 
 # {% endraw %}
 ```
