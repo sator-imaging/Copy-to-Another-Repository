@@ -27,10 +27,10 @@ inputs:
   pr-message:
     default: "${{ github.workflow }} on ${{ github.server_url }}/${{ github.repository }}"
   git-name:
-    default: "${{ github.actor }}"
+    default: "github-actions[bot]"
   git-email:
     description: 'Use your "@users.noreply.github.com" address if you want your icon shown in commit messages.'
-    default: 'devnull@inter.net'
+    default: 'github-actions[bot]@users.noreply.github.com'
   git-token:
     required: true
     description: 'Personal Access Token used to commit/create PR on output repository.'
